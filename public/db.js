@@ -56,3 +56,12 @@ const checkDB = () => {
         }
     }
 }
+
+const saveRecord = record => {
+    console.log('Saving record...');
+
+    const transaction = db.transaction(['BudgetStore'], 'readWrite');
+    const store = transaction.objectStore('BudgetStore');
+
+    store.add(record);
+}
