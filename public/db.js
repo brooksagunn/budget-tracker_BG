@@ -14,7 +14,7 @@ req.onupgradeneeded = e => {
     if (db.objectStoreNames) db.createObjectStore('BudgetStore', { autoIncrement : true });
 }
 
-req.onerror = e => console.log(`Error occured: ${e.target.errorCode}`);
+req.onerror = e => console.log(`Error occurred: ${e.target.errorCode}`);
 
 req.onsuccess = e => {
     console.log('Request resolved.');
@@ -65,3 +65,5 @@ const saveRecord = record => {
 
     store.add(record);
 }
+
+window.addEventListener('online', checkDB);
