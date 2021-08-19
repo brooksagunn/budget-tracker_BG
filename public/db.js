@@ -1,17 +1,19 @@
-const db;
-const budgetVersion;
+let db;
+let budgetVersion;
 
 const req = indexedDB.open('BudgetDB', budgetVersion || 21);
 
 req.onupgradeneeded = e => {
     const { oldVersion } = e;
-    const newVersion = e.newVersion || db.newVersion;
+    const newVersion = e.newVersion || db.version;
 
     console.log(`DB version replaced: ${oldVersion} -> ${newVersion}`);
 
     db = e.target.result;
 
-    if (db.objectStoreNames) db.createObjectStore('BudgetStore', { autoIncrement : true });
+    if (db.objectStoreNames.length === 0) {
+        db.createObjectStore('BudgetStore', { autoIncrement : true });
+    }
 }
 
 req.onerror = e => console.log(`Error occurred: ${e.target.errorCode}`);
@@ -45,7 +47,7 @@ const checkDB = () => {
             })
             .then(res => res.json())
             .then(data => {
-                if (data.length != 0) {
+                if (data.length !== 0) {
                     transaction = db.transaction(['BudgetStore'], 'readwrite');
 
                     const currentStore = transaction.objectStore('BudgetStore');
@@ -60,7 +62,7 @@ const checkDB = () => {
 const saveRecord = record => {
     console.log('Saving record...');
 
-    const transaction = db.transaction(['BudgetStore'], 'readWrite');
+    const transaction = db.transaction(['BudgetStore'], 'readwrite');
     const store = transaction.objectStore('BudgetStore');
 
     store.add(record);

@@ -4,8 +4,8 @@ const FILES_TO_CACHE = [
   "/dist/manifest.json",
   "/dist/bundle.js",
   "/db.js",
-  "/dist/icon-192x192.png",
-  "/dist/icon-512x512.png",
+  "/dist/icon_192x192.png",
+  "/dist/icon_512x512.png",
   "/styles.css",
 ];
 
@@ -55,7 +55,7 @@ self.addEventListener("fetch", event => {
   }
 
   // handle runtime GET requests for data from /api routes
-  if (event.request.url.includes("/api/images")) {
+  if (event.request.url.includes("/api/")) {
     // make network request and fallback to cache if network request fails (offline)
     event.respondWith(
       caches.open(RUNTIME_CACHE).then(cache => {
