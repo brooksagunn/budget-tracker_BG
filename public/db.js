@@ -14,6 +14,14 @@ req.onupgradeneeded = e => {
     if (db.objectStoreNames) db.createObjectStore('BudgetStore', { autoIncrement : true });
 }
 
-req.onerror = e => {
-    console.log(`Error occured: ${e.target.errorCode}`);
+req.onerror = e => console.log(`Error occured: ${e.target.errorCode}`);
+
+req.onsuccess = e => {
+    console.log('Request resolved.');
+    db = e.target.result;
+
+    if (navigator.onLine) {
+        console.log('Connected to backend.');
+        checkDatabase();
+    }
 }
