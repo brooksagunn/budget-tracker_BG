@@ -22,6 +22,37 @@ req.onsuccess = e => {
 
     if (navigator.onLine) {
         console.log('Connected to backend.');
-        checkDatabase();
+        checkDB();
+    }
+}
+
+const checkDB = () => {
+    let transaction = db.transaction(['BudgetStore'], 'readwrite');
+
+    const store = transaction.objectStore('BudgetStore');
+
+    const getAll = store.getAll();
+
+    getAll.onsuccess = () => {
+        if (getAll.result.length > 0) {
+            fetch('/api/transaction/bulk', {
+                method: 'POST',
+                body: JSON.stringify(getAll.result),
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json' 
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.length != 0) {
+                    transaction = db.transaction(['BudgetStore'], 'readwrite');
+
+                    const currentStore = transaction.objectStore('BudgetStore');
+                    currentStore.clear();
+                    console.log('Current store cleared.');
+                }
+            })
+        }
     }
 }
