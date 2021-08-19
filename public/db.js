@@ -1,6 +1,7 @@
 let db;
 let budgetVersion;
 
+// Opens a new Index DB
 const req = indexedDB.open('BudgetDB', budgetVersion || 21);
 
 req.onupgradeneeded = e => {
