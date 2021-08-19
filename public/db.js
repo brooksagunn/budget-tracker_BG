@@ -3,7 +3,7 @@ const budgetVersion;
 
 const req = indexedDB.open('BudgetDB', budgetVersion || 21);
 
-req.onupgradeneeded = (e) => {
+req.onupgradeneeded = e => {
     const { oldVersion } = e;
     const newVersion = e.newVersion || db.newVersion;
 
@@ -12,4 +12,8 @@ req.onupgradeneeded = (e) => {
     db = e.target.result;
 
     if (db.objectStoreNames) db.createObjectStore('BudgetStore', { autoIncrement : true });
+}
+
+req.onerror = e => {
+    console.log(`Error occured: ${e.target.errorCode}`);
 }
