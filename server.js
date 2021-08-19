@@ -15,7 +15,9 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost/budget", {
+const uri = "mongodb+srv://brooks-admin:hReLJMH6jvUYEiYC@cluster0.san5g.mongodb.net/budget?retryWrites=true&w=majority";
+
+mongoose.connect(uri, {
   useNewUrlParser: true,
   useFindAndModify: false
 });
