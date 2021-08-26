@@ -13,6 +13,9 @@
 
 A progressive web app (PWA) that allows users to view and save budget records whether on or offline.
 
+![budget_0](https://user-images.githubusercontent.com/80599137/130892983-987f41dc-771d-4e70-b33d-9ce7be7321b1.PNG)
+![budget_1](https://user-images.githubusercontent.com/80599137/130892988-3841666c-5a9b-4e14-83c5-1b53f3fc4905.PNG)
+
 ## Installing
 
 The npm packages used for this are as follows:
